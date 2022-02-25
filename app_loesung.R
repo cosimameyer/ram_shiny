@@ -13,12 +13,16 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library(wesanderson)
+library(shinythemes)
 
 # Load data
 data <- readxl::read_excel("data/funding_overview_all.xlsx")
 
 # Define UI for application
 ui <- fluidPage(
+  # Ändert das Thema
+  # Holt euch Inspiration hier: https://rstudio.github.io/shinythemes/
+  theme = shinytheme("superhero"),
   # Application title
   titlePanel("Wo fördert RAM die Wissenschaft?"),
   
