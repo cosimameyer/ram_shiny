@@ -17,56 +17,50 @@ library(wesanderson)
 # Load data
 data <- readxl::read_excel("data/funding_overview_all.xlsx")
 
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- fluidPage(
-  
   # Application title
   titlePanel("Wo fördert RAM die Wissenschaft?"),
   
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-      checkboxGroupInput(
-        # Gebt dieser Auswahl einen Namen (wir werden den Namen später
-        # nutzen, um auf dieses Auswahlmenü zuzugreifen)
-        "majorSelection",
-        "Wähle ein Studienfach",
-        # Der nächste Schritt ist wichtig - hier definieren wir, was der
-        # Nutzer auswählen kann. Die Logik ist, dass wir eine Liste (`list`)
-        # an Möglichkeiten in `choiches` speichern. Wir möchten hier alle
-        # Kontinente auswählen. Dazu müssen wir jeden Kontinent sein
-        # Anzeigeäquivalent (linke Seite) und seine Bezeichnung im 
-        # Datensatz (rechte Seite) geben
-        choices = list(
-          "CDSS" = "CDSS",
-          "Erziehungswissenschaften" = "Erziehungswissenschaften",
-          "Politikwissenschaften" = "Politikwissenschaften",
-          "Psychologie" = "Psychologie",
-          "Sozialwissenschaften" = "Sozialwissenschaften",
-          "Soziologie" = "Soziologie"
-        ),
-        selected = "Sozialwissenschaften"
-      )
-      
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("barplot")
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(sidebarPanel(
+    checkboxGroupInput(
+      # Gebt dieser Auswahl einen Namen (wir werden den Namen später
+      # nutzen, um auf dieses Auswahlmenü zuzugreifen)
+      "majorSelection",
+      "Wähle ein Studienfach",
+      # Der nächste Schritt ist wichtig - hier definieren wir, was der
+      # Nutzer auswählen kann. Die Logik ist, dass wir eine Liste (`list`)
+      # an Möglichkeiten in `choiches` speichern. Wir möchten hier alle
+      # Kontinente auswählen. Dazu müssen wir jeden Kontinent sein
+      # Anzeigeäquivalent (linke Seite) und seine Bezeichnung im
+      # Datensatz (rechte Seite) geben
+      choices = list(
+        "CDSS" = "CDSS",
+        "Erziehungswissenschaften" = "Erziehungswissenschaften",
+        "Politikwissenschaften" = "Politikwissenschaften",
+        "Psychologie" = "Psychologie",
+        "Sozialwissenschaften" = "Sozialwissenschaften",
+        "Soziologie" = "Soziologie"
+      ),
+      selected = "Sozialwissenschaften"
     )
-  )
+    
+  ),
+  
+  # Show a plot of the generated distribution
+  mainPanel(plotOutput("barplot")))
 )
 
-# Define server logic required to draw a histogram
+# Define server logic
 server <- function(input, output) {
-  
   output$barplot <- renderPlot({
-    data %>% 
-      dplyr::filter(major %in% input$majorSelection) %>% 
-      dplyr::filter(language == "de" & !is.na(major)) %>% 
-      dplyr::group_by(year, major) %>% 
-      dplyr::count() %>% 
-      ggplot2::ggplot(aes(x=year, y = n, fill = major)) +
+    data %>%
+      dplyr::filter(major %in% input$majorSelection) %>%
+      dplyr::filter(language == "de" & !is.na(major)) %>%
+      dplyr::group_by(year, major) %>%
+      dplyr::count() %>%
+      ggplot2::ggplot(aes(x = year, y = n, fill = major)) +
       ggplot2::geom_col() +
       ggplot2::scale_fill_manual("Studienfach", values = wes_palette("IsleofDogs1")) +
       theme_classic() +
@@ -75,5 +69,5 @@ server <- function(input, output) {
   })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
