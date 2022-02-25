@@ -8,12 +8,25 @@
 #
 
 # Load libraries
-library(shiny)
-library(readxl)
-library(dplyr)
-library(ggplot2)
-library(wesanderson)
-library(shinythemes)
+# 
+# packages <- c("dplyr",
+#               "shiny",
+#               "readxl",
+#               "ggplot2",
+#               "wesanderson",
+#               "shinythemes"
+# )
+# # Install uninstalled packages
+# lapply(packages[!(packages %in% installed.packages())], install.packages)
+# # Load all packages to library
+# lapply(packages, library, character.only = TRUE)
+
+library(shiny) # Web Application Framework for R
+library(readxl) # Read Excel Files
+library(dplyr) # A Grammar of Data Manipulation
+library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
+library(wesanderson) # A Wes Anderson Palette Generator
+library(shinythemes) # Themes for Shiny
 
 # Load data
 data <- readxl::read_excel("data/funding_overview_all.xlsx")
@@ -72,3 +85,4 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
