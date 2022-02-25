@@ -31,10 +31,7 @@ ui <- fluidPage(
       "Wähle ein Studienfach",
       # Der nächste Schritt ist wichtig - hier definieren wir, was der
       # Nutzer auswählen kann. Die Logik ist, dass wir eine Liste (`list`)
-      # an Möglichkeiten in `choiches` speichern. Wir möchten hier alle
-      # Kontinente auswählen. Dazu müssen wir jeden Kontinent sein
-      # Anzeigeäquivalent (linke Seite) und seine Bezeichnung im
-      # Datensatz (rechte Seite) geben
+      # an Möglichkeiten in `choiches` speichern.
       choices = list(
         "CDSS" = "CDSS",
         "Erziehungswissenschaften" = "Erziehungswissenschaften",
